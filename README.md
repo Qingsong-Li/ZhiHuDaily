@@ -2,19 +2,25 @@
 
 ## 1.主页面
 
-- 顶部可显示当日日期![image-20230219200847339](readme.assets/image-20230219200847339.png)
+- 顶部可显示当日日期!
+截图：
+![Alt text](https://github.com/Qingsong-Li/ZhiHuDaily/blob/master/images%20in%20readme/image-20230219200847339.png)
+
 
 - 可显示当日及过往五日的重点新闻（轮播图视图），并可点击查看新闻详情。
 
-<img src="readme.assets/QQ20230219-201703-HD-6809657.gif" alt="QQ20230219-201703-HD" style="zoom: 50%;" />
+
+截图：
+![Alt text](https://github.com/Qingsong-Li/ZhiHuDaily/blob/master/images%20in%20readme/QQ20230219-201703-HD-6809657.gif)
+
 
 - 可显示今日新闻的六条新闻并点击查看详情（未完成过往新闻的编写）。
 
 ## 2.新闻详情页
 
 - 可实现点击返回主页面，点赞并出现提示且点赞数加1，收藏并出现提示，评论和分享的点击反馈
-
-<img src="readme.assets/QQ20230219-202445.gif" alt="QQ20230219-202445" style="zoom: 67%;" />
+截图：
+![Alt text](https://github.com/Qingsong-Li/ZhiHuDaily/blob/master/images%20in%20readme/QQ20230219-202445.gif)
 
 
 
