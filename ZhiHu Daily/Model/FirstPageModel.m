@@ -26,13 +26,34 @@
             NSMutableArray *mArray = [NSMutableArray array];
         for(NSDictionary *dict in responseObject[@"stories"]){
             FirstPageModel *model = [FirstPageModel dataWithDict:dict];
+            model.date = responseObject[@"date"];
             [mArray addObject:model];
             NSLog(@"Success");
-        }if(success) success(mArray.copy);
+        }
+        
+        if(success) success(mArray.copy);
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"error");
+            NSLog(@"error1");
         }];
 }
+
++ (void)getDatawithSuccess:(void (^)(NSArray * _Nonnull))success Failure:(void (^)(void))failure Url:(NSString *)url{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:url parameters:nil headers:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSMutableArray *mArray = [NSMutableArray array];
+        for(NSDictionary *dict in responseObject[@"stories"]){
+            FirstPageModel *model = [FirstPageModel dataWithDict:dict];
+            model.date = responseObject[@"date"];
+            [mArray addObject:model];
+            NSLog(@"Success");
+        }
+        
+        if(success) success(mArray.copy);
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"%@", error);
+        }];
+}
+
 @end
 
 

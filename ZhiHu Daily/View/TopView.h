@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong) UIButton *headBtn;
 @property(nonatomic,strong) UIImageView *separate;
 
+
+
 @end
 
 NS_ASSUME_NONNULL_END

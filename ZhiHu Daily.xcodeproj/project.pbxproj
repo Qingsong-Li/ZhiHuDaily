@@ -27,6 +27,8 @@
 		ABA518772988F12300D68062 /* BannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA518762988F12300D68062 /* BannerView.m */; };
 		ABCC857D298CE7C500C499ED /* BannerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCC857C298CE7C500C499ED /* BannerModel.m */; };
 		ABCC8580298D584000C499ED /* BannerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCC857F298D584000C499ED /* BannerCollectionViewCell.m */; };
+		ABCEEBB429A89DA000F58581 /* LogPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCEEBB329A89DA000F58581 /* LogPageViewController.m */; };
+		ABCEEBB729AA494200F58581 /* PersonPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCEEBB629AA494200F58581 /* PersonPageViewController.m */; };
 		E3CAD47141CD6BA14177E115 /* Pods_ZhiHu_Daily_ZhiHu_DailyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7EAEC52686653F8C4F31F73 /* Pods_ZhiHu_Daily_ZhiHu_DailyUITests.framework */; };
 		F46681F2AACFBEFCCBAD731F /* Pods_ZhiHu_Daily.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DE1015AA2BDD1A1234C3C2D /* Pods_ZhiHu_Daily.framework */; };
 /* End PBXBuildFile section */
@@ -92,6 +94,10 @@
 		ABCC857C298CE7C500C499ED /* BannerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BannerModel.m; sourceTree = "<group>"; };
 		ABCC857E298D584000C499ED /* BannerCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BannerCollectionViewCell.h; sourceTree = "<group>"; };
 		ABCC857F298D584000C499ED /* BannerCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BannerCollectionViewCell.m; sourceTree = "<group>"; };
+		ABCEEBB229A89DA000F58581 /* LogPageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogPageViewController.h; sourceTree = "<group>"; };
+		ABCEEBB329A89DA000F58581 /* LogPageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogPageViewController.m; sourceTree = "<group>"; };
+		ABCEEBB529AA494200F58581 /* PersonPageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonPageViewController.h; sourceTree = "<group>"; };
+		ABCEEBB629AA494200F58581 /* PersonPageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonPageViewController.m; sourceTree = "<group>"; };
 		D3E458B076D5B6A9D36A2A17 /* Pods-ZhiHu Daily-ZhiHu DailyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZhiHu Daily-ZhiHu DailyUITests.release.xcconfig"; path = "Target Support Files/Pods-ZhiHu Daily-ZhiHu DailyUITests/Pods-ZhiHu Daily-ZhiHu DailyUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -231,6 +237,10 @@
 				AB404CDD2992511C00BD9AEE /* DetailPageViewController.m */,
 				AB65AD6429A0FDFD0057F2AE /* MainPageViewController.h */,
 				AB65AD6529A0FDFD0057F2AE /* MainPageViewController.m */,
+				ABCEEBB229A89DA000F58581 /* LogPageViewController.h */,
+				ABCEEBB329A89DA000F58581 /* LogPageViewController.m */,
+				ABCEEBB529AA494200F58581 /* PersonPageViewController.h */,
+				ABCEEBB629AA494200F58581 /* PersonPageViewController.m */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -487,9 +497,11 @@
 				ABA5174E29700AA700D68062 /* ViewController.m in Sources */,
 				AB65AD6629A0FDFD0057F2AE /* MainPageViewController.m in Sources */,
 				AB65ADB429A202D20057F2AE /* ExtraModel.m in Sources */,
+				ABCEEBB429A89DA000F58581 /* LogPageViewController.m in Sources */,
 				ABCC8580298D584000C499ED /* BannerCollectionViewCell.m in Sources */,
 				ABA5178029700B4900D68062 /* TopView.m in Sources */,
 				AB65ADAE29A11F410057F2AE /* ExtraView.m in Sources */,
+				ABCEEBB729AA494200F58581 /* PersonPageViewController.m in Sources */,
 				AB404CDE2992511C00BD9AEE /* DetailPageViewController.m in Sources */,
 				ABA5178F297151EA00D68062 /* FirstPageModel.m in Sources */,
 				ABA5174829700AA700D68062 /* AppDelegate.m in Sources */,

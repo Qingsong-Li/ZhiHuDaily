@@ -7,16 +7,11 @@
 
 #import "TopView.h"
 #import "Masonry.h"
-
+#import "MainPageViewController.h"
+#import "LogPageViewController.h"
 @implementation TopView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+
 
 - (instancetype)init{
     self = [super init];
@@ -62,6 +57,18 @@
         }];
     }
     return self;
+}
+
+//获取到该view所属的ViewController的方法
+- (UIViewController*)viewController {
+for(UIView* next = [self superview]; next; next = next.superview) {
+    UIResponder *nextResponder = [next nextResponder];
+    if([nextResponder isKindOfClass:[UIViewController class]]) {
+        return(UIViewController*)nextResponder;
+        }
+}
+    return nil;
+
 }
 
 #pragma mark - Lazy
@@ -177,14 +184,20 @@
 
 - (UIButton *)headBtn{
     if(_headBtn == nil){
-        _headBtn = [[UIButton alloc] init];
-        [_headBtn setBackgroundImage:[UIImage imageNamed:@"headshot"] forState:UIControlStateNormal];
-        [_headBtn addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+        _headBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _headBtn.adjustsImageWhenHighlighted = NO;
+        if([MainPageViewController isLog]== NO){
+            [_headBtn setBackgroundImage:[UIImage imageNamed:@"headshot2"] forState:UIControlStateNormal];
+            [_headBtn addTarget:self action:@selector(log:) forControlEvents:UIControlEventTouchUpInside];
+        }else if([MainPageViewController isLog] == YES){
+            [_headBtn setBackgroundImage:[UIImage imageNamed:@"headshot"] forState:UIControlStateNormal];
+        }
     }
     return _headBtn;
 }
 
--(void) buttonClick:(UIButton *) button{
-    
+-(void) log:(UIButton *) button{
+    LogPageViewController *lvc = [[LogPageViewController alloc] init];
+    [[self viewController].navigationController pushViewController:lvc animated:YES];
 }
 @end

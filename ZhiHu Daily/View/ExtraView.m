@@ -93,7 +93,8 @@ for(UIView* next = [self superview]; next; next = next.superview) {
 
 - (UIButton *)commentBtn{
     if(_commentBtn == nil){
-        _commentBtn = [[UIButton alloc] init];
+        _commentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _collectBtn.adjustsImageWhenHighlighted = NO;
         [_commentBtn setBackgroundImage:[UIImage imageNamed:@"commentBtn"] forState:UIControlStateNormal];
         [_commentBtn addTarget:self action:@selector(comment:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -103,7 +104,8 @@ for(UIView* next = [self superview]; next; next = next.superview) {
 
 - (UIButton *)backBtn{
     if(_backBtn == nil){
-        _backBtn = [[UIButton alloc] init];
+        _backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _backBtn.adjustsImageWhenHighlighted = NO;
         [_backBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
         [_backBtn addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -121,6 +123,7 @@ for(UIView* next = [self superview]; next; next = next.superview) {
 - (UIButton *)popBtn{
     if(_popBtn == nil){
         _popBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _popBtn.adjustsImageWhenHighlighted = NO;
         [_popBtn setBackgroundImage:[UIImage imageNamed:@"popBtn"] forState:UIControlStateNormal];
         [_popBtn setBackgroundImage:[UIImage imageNamed:@"selectedPopBtn"] forState:UIControlStateSelected];
         [_popBtn addTarget:self action:@selector(like:) forControlEvents:UIControlEventTouchUpInside];
@@ -131,6 +134,7 @@ for(UIView* next = [self superview]; next; next = next.superview) {
 - (UIButton *)collectBtn{
     if(_collectBtn== nil){
         _collectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _collectBtn.adjustsImageWhenHighlighted = NO;
         [_collectBtn setBackgroundImage:[UIImage imageNamed:@"collectBtn"] forState:UIControlStateNormal];
         [_collectBtn setBackgroundImage:[UIImage imageNamed:@"selectedCollectBtn"] forState:UIControlStateSelected];
         [_collectBtn addTarget:self action:@selector(collect:) forControlEvents:UIControlEventTouchUpInside];
@@ -140,7 +144,8 @@ for(UIView* next = [self superview]; next; next = next.superview) {
 
 - (UIButton *)shareBtn{
     if(_shareBtn == nil){
-        _shareBtn = [[UIButton alloc] init];
+        _shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _shareBtn.adjustsImageWhenHighlighted = NO;
         [_shareBtn setBackgroundImage:[UIImage imageNamed:@"shareBtn"] forState:UIControlStateNormal];
         [_shareBtn addTarget:self action:@selector(share:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -196,7 +201,6 @@ for(UIView* next = [self superview]; next; next = next.superview) {
     if(collectBtn.selected == YES){
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"取消收藏" preferredStyle:UIAlertControllerStyleAlert];
         [[self viewController] presentViewController:alert animated:YES completion:nil];
-        
         [alert dismissViewControllerAnimated:YES completion:nil];
         collectBtn.selected = NO;
     }else{

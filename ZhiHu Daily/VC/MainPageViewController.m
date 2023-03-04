@@ -21,19 +21,29 @@
 UITableViewDelegate,
 UITableViewDataSource,
 UICollectionViewDelegate,
-UICollectionViewDataSource
+UICollectionViewDataSource,
+UIScrollViewDelegate
 >
 
-@property(strong,nonatomic) TopView *topView;
-@property(strong,nonatomic) UITableView *table;
-@property(copy,nonatomic) NSArray *dataArray;
+
+
 
 @end
 
 @implementation MainPageViewController
 
+static BOOL loging;
+
++(void)log:(BOOL)choice{
+    loging = choice;
+}
++ (BOOL)isLog{
+    return loging;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBarHidden = YES;
     self.view.backgroundColor = UIColor.whiteColor;
     [self.view addSubview:self.topView];
     
@@ -107,13 +117,16 @@ UICollectionViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSLog(@"%zd",self.dataArray.count);
-    return self.dataArray.count;
+    self.numberOfRow = self.dataArray.count;
+    return self.numberOfRow;
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 120;
 }
+
+
 
 #pragma mark -UITableViewDelegate
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -131,6 +144,8 @@ UICollectionViewDataSource
     return firstCell;
 }
 
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     FirstPageModel *dataModel  = self.dataArray[indexPath.row];
@@ -140,5 +155,53 @@ UICollectionViewDataSource
     [self.navigationController pushViewController:dvc animated:YES];
     
 }
+
+#pragma mark - ScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    CGPoint offset = scrollView.contentOffset;
+    CGRect bounds = scrollView.bounds;
+    CGSize size = scrollView.contentSize;
+    UIEdgeInsets inset = scrollView.contentInset;
+    CGFloat scrollViewHeight = bounds.size.height;
+    CGFloat currentOffset = offset.y + scrollViewHeight - inset.bottom;
+    CGFloat maximumOffset = size.height;
+    
+    CGFloat minSpace = 5;
+    CGFloat maxSpace = 10;
+    bool isNeedLoadMore = false;
+    //上拉加载更多
+    //tableview 的 content的高度 小于 tableview的高度
+    if(scrollViewHeight>=maximumOffset){
+        CGFloat space = currentOffset - scrollViewHeight;
+        if(space>minSpace && space <maxSpace){
+            isNeedLoadMore = true;
+        }
+    }else{
+        //当currentOffset与maximumOffset的值相差很小时，说明scrollview已经滑到底部了。
+        CGFloat space = currentOffset - maximumOffset;
+        if(space>minSpace && space <maxSpace){
+            isNeedLoadMore = true;
+        }
+    }
+    
+    if(!self.isLoading && isNeedLoadMore){
+        self.isLoading = true;
+        NSLog(@"-->加载更多数据");
+        [self loadMore];
+    }
+}
+
+-(void) loadMore{
+    FirstPageModel *dataModel  = self.dataArray[0];
+    self.pastNewsUrl = [NSString stringWithFormat:@"https://news-at.zhihu.com/api/3/stories/before/%@", [NSString stringWithFormat:@"%d",[dataModel.date intValue]]];
+    [FirstPageModel getDatawithSuccess:^(NSArray * _Nonnull array) {
+        self.dataArray = array;
+        } Failure:^{
+            NSLog(@"请求失败");
+        } Url:self.pastNewsUrl] ;
+    
+    
+}
+
 
 @end
