@@ -56,7 +56,7 @@ static BOOL loging;
     
     
     [FirstPageModel getDatawithSuccess:^(NSArray * _Nonnull array) {
-        self.dataArray = array;
+        self.dataArray = [NSMutableArray arrayWithArray:array];
         NSLog(@"%@",self.dataArray);
         [self.view addSubview:self.table];
         [self.table mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -116,9 +116,7 @@ static BOOL loging;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSLog(@"%zd",self.dataArray.count);
-    self.numberOfRow = self.dataArray.count;
-    return self.numberOfRow;
+    return self.dataArray.count;
     
 }
 
@@ -132,15 +130,19 @@ static BOOL loging;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     FirstPageModel *dataModel  = self.dataArray[indexPath.row];
     //复用机制
-    static NSString *cellId = @"cellId";
-    FirstPageTableViewCell *firstCell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    if(firstCell == nil){
-        firstCell = [[FirstPageTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-        firstCell.title.text = dataModel.title;
-        firstCell.hint.text = dataModel.hint;
-        [firstCell.image sd_setImageWithURL:[NSURL URLWithString:[dataModel.image objectAtIndex:0]]];
-        
-    }
+//    static NSString *cellId = @"cellId";
+//    FirstPageTableViewCell *firstCell = [tableView dequeueReusableCellWithIdentifier:cellId];
+//    if(firstCell == nil){
+//        firstCell = [[FirstPageTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+//        firstCell.title.text = dataModel.title;
+//        firstCell.hint.text = dataModel.hint;
+//        [firstCell.image sd_setImageWithURL:[NSURL URLWithString:[dataModel.image objectAtIndex:0]]];
+//
+//    }
+    FirstPageTableViewCell *firstCell = [[FirstPageTableViewCell alloc] init];
+    firstCell.title.text = dataModel.title;
+    firstCell.hint.text = dataModel.hint;
+    [firstCell.image sd_setImageWithURL:[NSURL URLWithString:[dataModel.image objectAtIndex:0]]];
     return firstCell;
 }
 
@@ -148,7 +150,7 @@ static BOOL loging;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    FirstPageModel *dataModel  = self.dataArray[indexPath.row];
+    FirstPageModel *dataModel  = self.dataArray[indexPath.row % 6];
     DetailPageViewController *dvc = [[DetailPageViewController alloc]init];
     dvc.url = [NSURL URLWithString:dataModel.url];
     dvc.dataUrl= [NSString stringWithFormat:@"https://news-at.zhihu.com/api/3/story-extra/%@",dataModel.messageId];
@@ -188,15 +190,19 @@ static BOOL loging;
         self.isLoading = true;
         NSLog(@"-->加载更多数据");
         [self loadMore];
+        self.isLoading = false;
     }
 }
 
 -(void) loadMore{
-    FirstPageModel *dataModel  = self.dataArray[0];
+    
+    FirstPageModel *dataModel  = self.dataArray[self.dataArray.count-1];
     self.pastNewsUrl = [NSString stringWithFormat:@"https://news-at.zhihu.com/api/3/stories/before/%@", [NSString stringWithFormat:@"%d",[dataModel.date intValue]]];
     [FirstPageModel getDatawithSuccess:^(NSArray * _Nonnull array) {
-        self.dataArray = array;
-        } Failure:^{
+        [self.dataArray addObjectsFromArray:array];
+        [self.table reloadData];
+    
+    } Failure:^{
             NSLog(@"请求失败");
         } Url:self.pastNewsUrl] ;
     
