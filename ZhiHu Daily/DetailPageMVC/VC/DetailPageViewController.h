@@ -5,14 +5,14 @@
 //  Created by 李青松 on 2023/2/7.
 //
 
-#import "ViewController.h"
+
 #import "WebKit/WebKit.h"
 #import "ExtraView.h"
 #import "ExtraModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DetailPageViewController : ViewController
+@interface DetailPageViewController : UIViewController
 @property(nonatomic,strong) WKWebView * webView;
 @property(nonatomic,copy) NSURL *url;
 @property(nonatomic,strong) ExtraView *extView;

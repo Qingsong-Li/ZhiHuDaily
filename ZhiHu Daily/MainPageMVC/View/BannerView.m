@@ -44,7 +44,7 @@
             make.width.mas_equalTo(self).mas_offset(0);
             make.height.mas_equalTo(self).mas_offset(0);
         }];
-        _collectionView.backgroundColor = UIColor.grayColor;
+        _collectionView.backgroundColor = UIColor.whiteColor;
     }
     return _collectionView;
 }

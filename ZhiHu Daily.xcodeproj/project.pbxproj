@@ -14,8 +14,8 @@
 		AB65ADAB29A10E5C0057F2AE /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB65ADAA29A10E5C0057F2AE /* WebKit.framework */; };
 		AB65ADAE29A11F410057F2AE /* ExtraView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB65ADAD29A11F410057F2AE /* ExtraView.m */; };
 		AB65ADB429A202D20057F2AE /* ExtraModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB65ADB329A202D20057F2AE /* ExtraModel.m */; };
+		AB9F3D4229BF2968006A390D /* DateSeparateView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9F3D4129BF2968006A390D /* DateSeparateView.m */; };
 		ABA5174829700AA700D68062 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA5174729700AA700D68062 /* AppDelegate.m */; };
-		ABA5174E29700AA700D68062 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA5174D29700AA700D68062 /* ViewController.m */; };
 		ABA5175329700AA800D68062 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABA5175229700AA800D68062 /* Assets.xcassets */; };
 		ABA5175929700AA800D68062 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA5175829700AA800D68062 /* main.m */; };
 		ABA5176329700AA900D68062 /* ZhiHu_DailyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA5176229700AA900D68062 /* ZhiHu_DailyTests.m */; };
@@ -69,11 +69,11 @@
 		AB65ADAD29A11F410057F2AE /* ExtraView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExtraView.m; sourceTree = "<group>"; };
 		AB65ADB229A202D20057F2AE /* ExtraModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExtraModel.h; sourceTree = "<group>"; };
 		AB65ADB329A202D20057F2AE /* ExtraModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExtraModel.m; sourceTree = "<group>"; };
+		AB9F3D4029BF2968006A390D /* DateSeparateView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateSeparateView.h; sourceTree = "<group>"; };
+		AB9F3D4129BF2968006A390D /* DateSeparateView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateSeparateView.m; sourceTree = "<group>"; };
 		ABA5174329700AA700D68062 /* ZhiHu Daily.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ZhiHu Daily.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABA5174629700AA700D68062 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		ABA5174729700AA700D68062 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		ABA5174C29700AA700D68062 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		ABA5174D29700AA700D68062 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		ABA5175229700AA800D68062 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ABA5175729700AA800D68062 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABA5175829700AA800D68062 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -143,6 +143,88 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		AB9F3D3329BECE21006A390D /* MainPageMVC */ = {
+			isa = PBXGroup;
+			children = (
+				ABA5177C29700B1D00D68062 /* Model */,
+				ABA5177B29700B0F00D68062 /* View */,
+				ABA5177D29700B2400D68062 /* VC */,
+			);
+			path = MainPageMVC;
+			sourceTree = "<group>";
+		};
+		AB9F3D3629BECE5B006A390D /* DetailPageMVC */ = {
+			isa = PBXGroup;
+			children = (
+				AB9F3D3929BECEB6006A390D /* View */,
+				AB9F3D3829BECEAF006A390D /* VC */,
+				AB9F3D3729BECEA7006A390D /* Model */,
+			);
+			path = DetailPageMVC;
+			sourceTree = "<group>";
+		};
+		AB9F3D3729BECEA7006A390D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AB65ADB229A202D20057F2AE /* ExtraModel.h */,
+				AB65ADB329A202D20057F2AE /* ExtraModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AB9F3D3829BECEAF006A390D /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				AB404CDC2992511C00BD9AEE /* DetailPageViewController.h */,
+				AB404CDD2992511C00BD9AEE /* DetailPageViewController.m */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		AB9F3D3929BECEB6006A390D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AB65ADAC29A11F410057F2AE /* ExtraView.h */,
+				AB65ADAD29A11F410057F2AE /* ExtraView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AB9F3D4329C0C0FE006A390D /* PersonAndLogPageMVC */ = {
+			isa = PBXGroup;
+			children = (
+				AB9F3D4629C0C12D006A390D /* View */,
+				AB9F3D4529C0C128006A390D /* VC */,
+				AB9F3D4429C0C122006A390D /* Model */,
+			);
+			path = PersonAndLogPageMVC;
+			sourceTree = "<group>";
+		};
+		AB9F3D4429C0C122006A390D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AB9F3D4529C0C128006A390D /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				ABCEEBB229A89DA000F58581 /* LogPageViewController.h */,
+				ABCEEBB329A89DA000F58581 /* LogPageViewController.m */,
+				ABCEEBB529AA494200F58581 /* PersonPageViewController.h */,
+				ABCEEBB629AA494200F58581 /* PersonPageViewController.m */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		AB9F3D4629C0C12D006A390D /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		ABA5173A29700AA700D68062 = {
 			isa = PBXGroup;
 			children = (
@@ -170,9 +252,9 @@
 			children = (
 				ABA5174629700AA700D68062 /* AppDelegate.h */,
 				ABA5174729700AA700D68062 /* AppDelegate.m */,
-				ABA5177D29700B2400D68062 /* VC */,
-				ABA5177B29700B0F00D68062 /* View */,
-				ABA5177C29700B1D00D68062 /* Model */,
+				AB9F3D4329C0C0FE006A390D /* PersonAndLogPageMVC */,
+				AB9F3D3629BECE5B006A390D /* DetailPageMVC */,
+				AB9F3D3329BECE21006A390D /* MainPageMVC */,
 				ABA5175229700AA800D68062 /* Assets.xcassets */,
 				AB65AD6729A107550057F2AE /* LaunchScreen.storyboard */,
 				ABA5175729700AA800D68062 /* Info.plist */,
@@ -209,8 +291,8 @@
 				ABA518762988F12300D68062 /* BannerView.m */,
 				ABCC857E298D584000C499ED /* BannerCollectionViewCell.h */,
 				ABCC857F298D584000C499ED /* BannerCollectionViewCell.m */,
-				AB65ADAC29A11F410057F2AE /* ExtraView.h */,
-				AB65ADAD29A11F410057F2AE /* ExtraView.m */,
+				AB9F3D4029BF2968006A390D /* DateSeparateView.h */,
+				AB9F3D4129BF2968006A390D /* DateSeparateView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -222,8 +304,6 @@
 				ABA5178E297151EA00D68062 /* FirstPageModel.m */,
 				ABCC857B298CE7C500C499ED /* BannerModel.h */,
 				ABCC857C298CE7C500C499ED /* BannerModel.m */,
-				AB65ADB229A202D20057F2AE /* ExtraModel.h */,
-				AB65ADB329A202D20057F2AE /* ExtraModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -231,16 +311,8 @@
 		ABA5177D29700B2400D68062 /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				ABA5174C29700AA700D68062 /* ViewController.h */,
-				ABA5174D29700AA700D68062 /* ViewController.m */,
-				AB404CDC2992511C00BD9AEE /* DetailPageViewController.h */,
-				AB404CDD2992511C00BD9AEE /* DetailPageViewController.m */,
 				AB65AD6429A0FDFD0057F2AE /* MainPageViewController.h */,
 				AB65AD6529A0FDFD0057F2AE /* MainPageViewController.m */,
-				ABCEEBB229A89DA000F58581 /* LogPageViewController.h */,
-				ABCEEBB329A89DA000F58581 /* LogPageViewController.m */,
-				ABCEEBB529AA494200F58581 /* PersonPageViewController.h */,
-				ABCEEBB629AA494200F58581 /* PersonPageViewController.m */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -494,7 +566,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABA518772988F12300D68062 /* BannerView.m in Sources */,
-				ABA5174E29700AA700D68062 /* ViewController.m in Sources */,
 				AB65AD6629A0FDFD0057F2AE /* MainPageViewController.m in Sources */,
 				AB65ADB429A202D20057F2AE /* ExtraModel.m in Sources */,
 				ABCEEBB429A89DA000F58581 /* LogPageViewController.m in Sources */,
@@ -504,6 +575,7 @@
 				ABCEEBB729AA494200F58581 /* PersonPageViewController.m in Sources */,
 				AB404CDE2992511C00BD9AEE /* DetailPageViewController.m in Sources */,
 				ABA5178F297151EA00D68062 /* FirstPageModel.m in Sources */,
+				AB9F3D4229BF2968006A390D /* DateSeparateView.m in Sources */,
 				ABA5174829700AA700D68062 /* AppDelegate.m in Sources */,
 				ABA5178C29713D5A00D68062 /* FirstPageTableViewCell.m in Sources */,
 				ABA5175929700AA800D68062 /* main.m in Sources */,

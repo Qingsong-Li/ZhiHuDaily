@@ -6,7 +6,6 @@
 //
 
 #import "MainPageViewController.h"
-#import "ViewController.h"
 #import "TopView.h"
 #import "FirstPageModel.h"
 #import "FirstPageTableViewCell.h"
@@ -15,6 +14,8 @@
 #import "BannerModel.h"
 #import "BannerCollectionViewCell.h"
 #import "DetailPageViewController.h"
+#import "DateSeparateView.h"
+
 
 
 @interface MainPageViewController ()<
@@ -24,8 +25,7 @@ UICollectionViewDelegate,
 UICollectionViewDataSource,
 UIScrollViewDelegate
 >
-
-
+@property(nonatomic,getter=isloading,assign) BOOL loading;
 
 
 @end
@@ -56,7 +56,8 @@ static BOOL loging;
     
     
     [FirstPageModel getDatawithSuccess:^(NSArray * _Nonnull array) {
-        self.dataArray = [NSMutableArray arrayWithArray:array];
+        self.dataArray = array;
+        [self.allDataArray addObject:self.dataArray];
         NSLog(@"%@",self.dataArray);
         [self.view addSubview:self.table];
         [self.table mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -69,14 +70,23 @@ static BOOL loging;
             NSLog(@"请求失败");
         }];
     
-    
-
-    
    
+    
     // Do any additional setup after loading the view.
 }
 
+
+
+
 #pragma mark -Lazy
+
+- (NSMutableArray<NSArray *> *)allDataArray{
+    if(_allDataArray == nil){
+        _allDataArray = [[NSMutableArray alloc]init];
+    }
+    return _allDataArray;
+}
+
 
 - (TopView *)topView{
     if(_topView == nil){
@@ -87,24 +97,13 @@ static BOOL loging;
 
 - (UITableView *)table{
     if(_table == nil){
-        _table = [[UITableView alloc]init];
+        _table = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        _table.showsVerticalScrollIndicator = NO;
+        _table.separatorStyle = UITableViewCellSeparatorStyleNone;
         _table.delegate = self;
         _table.dataSource = self;
-        _table.contentInset = UIEdgeInsetsMake(385, 0, 0, 0);
-        
-        
-        BannerView *bannerView = [[BannerView alloc] init];
-        bannerView.backgroundColor = UIColor.redColor;
-        [_table addSubview:bannerView];
-        [bannerView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_offset(-385);
-            make.left.mas_equalTo(self.table).mas_offset(0);
-            make.width.mas_equalTo(self.table).mas_offset(0);
-            make.height.mas_offset(385);
-        }];
-        
-        
-      
+        _table.estimatedSectionFooterHeight = 0;
+        _table.estimatedSectionHeaderHeight = 0;
     }
     return _table;
 }
@@ -112,39 +111,74 @@ static BOOL loging;
 
 #pragma mark -UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return self.allDataArray.count;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if(section == 0){
+        BannerView *bannerView = [[BannerView alloc] init];
+        return bannerView;
+    }else {
+        DateSeparateView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:TableViewHeaderViewReuseIdentifier];
+        if (headerView == nil) {
+            headerView = [[DateSeparateView alloc] initWithReuseIdentifier:TableViewHeaderViewReuseIdentifier];
+        }
+        FirstPageModel *model = [[FirstPageModel alloc]init];
+        model = self.allDataArray[section][0];
+        NSString *month = [model.date substringWithRange:NSMakeRange(4, 2)];
+        NSString *date = [model.date substringWithRange:NSMakeRange(6, 2)];
+        headerView.dateLab.text= [NSString stringWithFormat:@"%ld月%ld日",[month integerValue],[date integerValue]];
+        return headerView;
+    }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    UITableViewHeaderFooterView *footer = [[UITableViewHeaderFooterView alloc]init];
+    footer.contentView.backgroundColor = UIColor.whiteColor;
+    return footer;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if(section == 0){
+        return 385;
+    }else{
+        return 20;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 0.00001f;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.dataArray.count;
+    return  self.allDataArray[section].count;
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 120;
+    return 110;
 }
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    FirstPageModel *dataModel = self.allDataArray[indexPath.section][indexPath.row];
+    //复用机制
+    FirstPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellReuseIdentifier];
+    if(cell == nil){
+        cell = [[FirstPageTableViewCell alloc] init];
+        cell.title.text = dataModel.title;
+        cell.hint.text = dataModel.hint;
+        [cell.image sd_setImageWithURL:[NSURL URLWithString:[dataModel.image objectAtIndex:0]]];
+    }
+    return cell;
+//
+}
+
+
 
 
 
 #pragma mark -UITableViewDelegate
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    FirstPageModel *dataModel  = self.dataArray[indexPath.row];
-    //复用机制
-//    static NSString *cellId = @"cellId";
-//    FirstPageTableViewCell *firstCell = [tableView dequeueReusableCellWithIdentifier:cellId];
-//    if(firstCell == nil){
-//        firstCell = [[FirstPageTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-//        firstCell.title.text = dataModel.title;
-//        firstCell.hint.text = dataModel.hint;
-//        [firstCell.image sd_setImageWithURL:[NSURL URLWithString:[dataModel.image objectAtIndex:0]]];
-//
-//    }
-    FirstPageTableViewCell *firstCell = [[FirstPageTableViewCell alloc] init];
-    firstCell.title.text = dataModel.title;
-    firstCell.hint.text = dataModel.hint;
-    [firstCell.image sd_setImageWithURL:[NSURL URLWithString:[dataModel.image objectAtIndex:0]]];
-    return firstCell;
-}
 
 
 
@@ -160,53 +194,32 @@ static BOOL loging;
 
 #pragma mark - ScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    CGPoint offset = scrollView.contentOffset;
-    CGRect bounds = scrollView.bounds;
-    CGSize size = scrollView.contentSize;
-    UIEdgeInsets inset = scrollView.contentInset;
-    CGFloat scrollViewHeight = bounds.size.height;
-    CGFloat currentOffset = offset.y + scrollViewHeight - inset.bottom;
-    CGFloat maximumOffset = size.height;
-    
-    CGFloat minSpace = 5;
-    CGFloat maxSpace = 10;
-    bool isNeedLoadMore = false;
-    //上拉加载更多
-    //tableview 的 content的高度 小于 tableview的高度
-    if(scrollViewHeight>=maximumOffset){
-        CGFloat space = currentOffset - scrollViewHeight;
-        if(space>minSpace && space <maxSpace){
-            isNeedLoadMore = true;
-        }
-    }else{
-        //当currentOffset与maximumOffset的值相差很小时，说明scrollview已经滑到底部了。
-        CGFloat space = currentOffset - maximumOffset;
-        if(space>minSpace && space <maxSpace){
-            isNeedLoadMore = true;
-        }
-    }
-    
-    if(!self.isLoading && isNeedLoadMore){
-        self.isLoading = true;
-        NSLog(@"-->加载更多数据");
+    CGFloat contentYoffset = scrollView.contentOffset.y;
+    NSLog(@"内容-偏移量:%f table高度:%f",scrollView.contentSize.height-contentYoffset,self.table.frame.size.height);
+    if(self.table.frame.size.height == 0 ||scrollView.contentSize.height-contentYoffset<700) return;
+    if(self.isloading == YES) return;
+    if (scrollView.contentSize.height-contentYoffset- 200<= self.table.frame.size.height) {
         [self loadMore];
-        self.isLoading = false;
+        self.loading = YES;
     }
 }
+    
+
 
 -(void) loadMore{
-    
-    FirstPageModel *dataModel  = self.dataArray[self.dataArray.count-1];
+    FirstPageModel *dataModel  = self.allDataArray[self.allDataArray.count-1][0];
     self.pastNewsUrl = [NSString stringWithFormat:@"https://news-at.zhihu.com/api/3/stories/before/%@", [NSString stringWithFormat:@"%d",[dataModel.date intValue]]];
     [FirstPageModel getDatawithSuccess:^(NSArray * _Nonnull array) {
-        [self.dataArray addObjectsFromArray:array];
+        self.dataArray = array;
+        [self.allDataArray addObject:self.dataArray];
+        NSLog(@"loadmore");
         [self.table reloadData];
-    
+        self.loading = NO;
     } Failure:^{
             NSLog(@"请求失败");
         } Url:self.pastNewsUrl] ;
     
-    
+   
 }
 
 

@@ -8,6 +8,8 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
+//复用标识
+UIKIT_EXTERN NSString *CellReuseIdentifier;
 
 @interface FirstPageTableViewCell : UITableViewCell
 

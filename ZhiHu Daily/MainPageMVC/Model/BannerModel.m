@@ -27,8 +27,9 @@
         for(NSDictionary *dict in responseObject[@"top_stories"]){
             BannerModel *model = [BannerModel dataWithDict:dict];
             [mArray addObject:model];
-            NSLog(@"Success");
-        }if(success) success(mArray.copy);
+        }
+        NSLog(@"Success2");
+        if(success) success(mArray.copy);
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"error");
         }];

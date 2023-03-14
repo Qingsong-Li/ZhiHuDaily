@@ -28,8 +28,8 @@
             FirstPageModel *model = [FirstPageModel dataWithDict:dict];
             model.date = responseObject[@"date"];
             [mArray addObject:model];
-            NSLog(@"Success");
         }
+        NSLog(@"Success");
         
         if(success) success(mArray.copy);
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -45,8 +45,8 @@
             FirstPageModel *model = [FirstPageModel dataWithDict:dict];
             model.date = responseObject[@"date"];
             [mArray addObject:model];
-            NSLog(@"Success");
         }
+        NSLog(@"Success1");
         
         if(success) success(mArray.copy);
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

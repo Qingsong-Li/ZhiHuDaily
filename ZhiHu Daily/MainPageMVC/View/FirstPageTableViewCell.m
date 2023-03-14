@@ -8,6 +8,8 @@
 #import "FirstPageTableViewCell.h"
 #import "Masonry.h"
 
+NSString *CellReuseIdentifier = @"TableViewCell";
+
 @implementation FirstPageTableViewCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
