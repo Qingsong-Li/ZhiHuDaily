@@ -169,6 +169,9 @@ static BOOL loging;
     if(cell == nil){
         cell = [[FirstPageTableViewCell alloc] init];
         cell.title.text = dataModel.title;
+//        CGSize size = [cell.title sizeThatFits:CGSizeMake(200, MAXFLOAT)];
+//        cell.title.frame = CGRectMake(0, 0, 0, size.height);
+        [cell.title sizeToFit];
         cell.hint.text = dataModel.hint;
         [cell.image sd_setImageWithURL:[NSURL URLWithString:[dataModel.image objectAtIndex:0]]];
     }

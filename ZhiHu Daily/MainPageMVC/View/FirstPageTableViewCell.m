@@ -21,17 +21,17 @@ NSString *CellReuseIdentifier = @"TableViewCell";
        
         
         [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(self.contentView).mas_offset(22);
+            make.top.mas_equalTo(self.contentView).mas_offset(25);
             make.left.mas_equalTo(self.contentView).mas_offset(10);
             make.width.mas_equalTo(self.contentView).mas_offset(-100);
-            make.height.mas_equalTo(self.contentView).mas_offset(-70);
+            
         }];
         
         [self.image mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(self.title).mas_offset(-2);
+            make.centerY.mas_equalTo(self.contentView.mas_centerY).mas_offset(0);
             make.left.mas_equalTo(self.title.mas_right).mas_offset(2);
-            make.width.mas_equalTo(self.title.mas_height).mas_offset(30);
-            make.height.mas_equalTo(self.title).mas_offset(30);
+            make.width.mas_equalTo(self.contentView.mas_height).mas_offset(-40);
+            make.height.mas_equalTo(self.contentView).mas_offset(-40);
         }];
         
         [self.hint mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -51,7 +51,8 @@ NSString *CellReuseIdentifier = @"TableViewCell";
     if(_title == nil){
         _title = [[UILabel alloc]init];
         _title.numberOfLines = 2;
-        _title.font = [UIFont boldSystemFontOfSize:18];
+        _title.font = [UIFont boldSystemFontOfSize:16];
+        
     }
     return _title;
 }
@@ -59,7 +60,7 @@ NSString *CellReuseIdentifier = @"TableViewCell";
 - (UILabel *)hint{
     if(_hint == nil){
         _hint = [[UILabel alloc]init];
-        _hint.font = [UIFont systemFontOfSize:14];
+        _hint.font = [UIFont systemFontOfSize:12];
         _hint.textColor = UIColor.grayColor;
     }
     return _hint;
