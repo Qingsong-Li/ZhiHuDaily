@@ -37,13 +37,6 @@
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.showsHorizontalScrollIndicator = NO;
         [_collectionView registerClass:BannerCollectionViewCell.class forCellWithReuseIdentifier:BannerCollectionViewCellReuseIdentifier];
-        [self addSubview:_collectionView];
-        [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(self).mas_offset(0);
-            make.left.mas_equalTo(self).mas_offset(0);
-            make.width.mas_equalTo(self).mas_offset(0);
-            make.height.mas_equalTo(self).mas_offset(0);
-        }];
         _collectionView.backgroundColor = UIColor.whiteColor;
     }
     return _collectionView;
@@ -54,6 +47,20 @@
     if(self){
         [BannerModel getDatawithSuccess:^(NSArray * _Nonnull array) {
             self.bannerDataArray = array;
+            [self addSubview:self.collectionView];
+            [self addSubview:self.pageControl];
+            [self.pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.bottom.mas_equalTo(self).mas_offset(-5);
+                make.right.mas_equalTo(self).mas_offset(30);
+                make.width.mas_offset(200);
+                make.height.mas_offset(25);
+            }];
+            [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(self).mas_offset(0);
+                make.left.mas_equalTo(self).mas_offset(0);
+                make.width.mas_equalTo(self).mas_offset(0);
+                make.height.mas_equalTo(self).mas_offset(0);
+            }];
             } Failure:^{
                 NSLog(@"请求失败");
             }];
@@ -108,11 +115,11 @@ for(UIView* next = [self superview]; next; next = next.superview) {
 
     
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-        BannerModel *bannerDataModel  = self.bannerDataArray[indexPath.item];
-        BannerCollectionViewCell *bannerCell = [collectionView dequeueReusableCellWithReuseIdentifier:BannerCollectionViewCellReuseIdentifier forIndexPath:indexPath];
-    [bannerCell.image sd_setImageWithURL:[NSURL URLWithString:bannerDataModel.image]];
+    BannerModel *bannerDataModel  = self.bannerDataArray[indexPath.item];
+    BannerCollectionViewCell *bannerCell = [collectionView dequeueReusableCellWithReuseIdentifier:BannerCollectionViewCellReuseIdentifier forIndexPath:indexPath];
     bannerCell.title.text = bannerDataModel.title;
     bannerCell.hint.text = bannerDataModel.hint;
+    [bannerCell.image sd_setImageWithURL:[NSURL URLWithString:bannerDataModel.image]];
     
         return bannerCell;
     }
@@ -150,13 +157,6 @@ for(UIView* next = [self superview]; next; next = next.superview) {
         _pageControl.pageIndicatorTintColor = [UIColor grayColor];
         _pageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
         _pageControl.alpha = 1;
-        [self addSubview:_pageControl];
-        [_pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.mas_equalTo(self).mas_offset(-5);
-            make.right.mas_equalTo(self).mas_offset(30);
-            make.width.mas_offset(200);
-            make.height.mas_offset(25);
-        }];
     }
     return _pageControl;
 }

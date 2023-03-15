@@ -16,12 +16,13 @@
 - (instancetype)init{
     self = [super init];
     if(self){
-//        self.backgroundColor = UIColor.redColor;
+
         [self addSubview:self.dateLab];
         [self addSubview:self.monthLab];
         [self addSubview:self.separate];
         [self addSubview:self.zhiHuLab];
         [self addSubview:self.headBtn];
+
      //Masonry
         [self.dateLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self).mas_offset(5);
@@ -72,6 +73,7 @@ for(UIView* next = [self superview]; next; next = next.superview) {
 }
 
 #pragma mark - Lazy
+
 
 - (UILabel *)dateLab{
     if(_dateLab == nil){

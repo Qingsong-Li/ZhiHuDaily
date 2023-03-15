@@ -91,6 +91,8 @@ static BOOL loging;
 - (TopView *)topView{
     if(_topView == nil){
         _topView = [[TopView alloc] init];
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backToTop)];
+        [_topView addGestureRecognizer:tapGesture];
     }
     return _topView;
 }
@@ -220,6 +222,12 @@ static BOOL loging;
         } Url:self.pastNewsUrl] ;
     
    
+}
+
+
+//用于点击顶部试图TableView回到顶端
+-(void)backToTop{
+    [self.table scrollRectToVisible:CGRectMake(0, 0, 0.1, 0.1) animated:YES];
 }
 
 
