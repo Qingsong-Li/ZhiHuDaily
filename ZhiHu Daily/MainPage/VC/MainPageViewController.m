@@ -41,18 +41,32 @@ static BOOL loging;
     return loging;
 }
 
+-(void)getLoginStatus{
+//    NSString *path1 = [[NSBundle mainBundle] pathForResource:@"LoginStatus" ofType:@"plist"];
+//    NSString *path2 = [NSString stringWithContentsOfFile:path1 encoding:NSUTF8StringEncoding error:nil];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"LoginStatus.plist" ofType:nil];
+    NSLog(@"%@",path);
+    NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:path];
+    if([dic[@"isLog"]  isEqual: @"YES"]){
+        loging = YES;
+    }else{
+        loging = NO;
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self getLoginStatus];
     self.navigationController.navigationBarHidden = YES;
     self.view.backgroundColor = UIColor.whiteColor;
-    [self.view addSubview:self.topView];
-    
-    [self.topView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).mas_offset(55);
-        make.left.mas_equalTo(self.view).mas_offset(0);
-        make.width.mas_equalTo(self.view.mas_width).mas_offset(0);
-        make.height.mas_offset(55);
-    }];
+//    [self.view addSubview:self.topView];
+//
+//    [self.topView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(self.view).mas_offset(55);
+//        make.left.mas_equalTo(self.view).mas_offset(0);
+//        make.width.mas_equalTo(self.view.mas_width).mas_offset(0);
+//        make.height.mas_offset(55);
+//    }];
     
     
     [FirstPageModel getDatawithSuccess:^(NSArray * _Nonnull array) {
@@ -61,7 +75,7 @@ static BOOL loging;
         NSLog(@"%@",self.dataArray);
         [self.view addSubview:self.table];
         [self.table mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(self.topView.mas_bottom).mas_offset(0);
+            make.top.mas_equalTo(self.view).mas_offset(110);
             make.left.mas_equalTo(self.view).mas_offset(0);
             make.width.mas_equalTo(self.view).mas_offset(0);
             make.height.mas_equalTo(self.view).mas_offset(-55);
@@ -75,6 +89,18 @@ static BOOL loging;
     // Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    TopView *newTopView = [[TopView alloc]init];
+    [self.view addSubview:newTopView];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backToTop)];
+    [newTopView addGestureRecognizer:tapGesture];
+    [newTopView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view).mas_offset(55);
+        make.left.mas_equalTo(self.view).mas_offset(0);
+        make.width.mas_equalTo(self.view.mas_width).mas_offset(0);
+        make.height.mas_offset(55);
+    }];
+}
 
 
 
@@ -89,7 +115,7 @@ static BOOL loging;
 
 
 - (TopView *)topView{
-    if(_topView == nil){
+    if(_topView == nil ){
         _topView = [[TopView alloc] init];
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backToTop)];
         [_topView addGestureRecognizer:tapGesture];
@@ -134,11 +160,7 @@ static BOOL loging;
     }
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    UITableViewHeaderFooterView *footer = [[UITableViewHeaderFooterView alloc]init];
-    footer.contentView.backgroundColor = UIColor.whiteColor;
-    return footer;
-}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if(section == 0){
@@ -189,7 +211,7 @@ static BOOL loging;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    FirstPageModel *dataModel  = self.dataArray[indexPath.row % 6];
+    FirstPageModel *dataModel  = self.allDataArray[indexPath.section][indexPath.row];
     DetailPageViewController *dvc = [[DetailPageViewController alloc]init];
     dvc.url = [NSURL URLWithString:dataModel.url];
     dvc.dataUrl= [NSString stringWithFormat:@"https://news-at.zhihu.com/api/3/story-extra/%@",dataModel.messageId];
@@ -207,6 +229,14 @@ static BOOL loging;
         [self loadMore];
         self.loading = YES;
     }
+    
+    if(scrollView.contentOffset.y < 0){
+        [self pullDownScrollScaleWithScrollView:scrollView];
+    }
+}
+
+- (void)pullDownScrollScaleWithScrollView:(UIScrollView *)scrollView{
+
 }
     
 

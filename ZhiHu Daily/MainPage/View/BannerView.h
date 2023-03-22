@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BannerView : UIView<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface BannerView : UITableViewHeaderFooterView
 
 @property(nonatomic,strong) UIView *view;
 

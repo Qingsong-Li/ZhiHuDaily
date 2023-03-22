@@ -12,6 +12,14 @@
 #import "UIimageView+WebCache.h"
 #import "DetailPageViewController.h"
 
+
+@interface BannerView ()<
+UICollectionViewDelegate,
+UICollectionViewDataSource,
+UICollectionViewDelegateFlowLayout>
+
+@end
+
 @implementation BannerView
 
 #pragma mark -Lazy
@@ -132,6 +140,7 @@ for(UIView* next = [self superview]; next; next = next.superview) {
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
+    NSLog(@"stop");
     [self myTimer];
 }
 

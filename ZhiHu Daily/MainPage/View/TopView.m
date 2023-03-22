@@ -9,6 +9,7 @@
 #import "Masonry.h"
 #import "MainPageViewController.h"
 #import "LogPageViewController.h"
+#import "PersonPageViewController.h"
 @implementation TopView
 
 
@@ -32,7 +33,7 @@
         }];//dateLab
         [self.monthLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self.dateLab).mas_offset(28);
-            make.left.mas_equalTo(self.dateLab).mas_offset(0);
+            make.centerX.mas_equalTo(self.dateLab).mas_offset(0);
             make.width.mas_equalTo(self.dateLab.mas_width).mas_offset(10);
             make.height.mas_equalTo(self.dateLab).mas_offset(-15);
             
@@ -185,7 +186,7 @@ for(UIView* next = [self superview]; next; next = next.superview) {
 }
 
 - (UIButton *)headBtn{
-    if(_headBtn == nil){
+    if(_headBtn == nil ){
         _headBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _headBtn.adjustsImageWhenHighlighted = NO;
         if([MainPageViewController isLog]== NO){
@@ -193,6 +194,7 @@ for(UIView* next = [self superview]; next; next = next.superview) {
             [_headBtn addTarget:self action:@selector(log:) forControlEvents:UIControlEventTouchUpInside];
         }else if([MainPageViewController isLog] == YES){
             [_headBtn setBackgroundImage:[UIImage imageNamed:@"headshot"] forState:UIControlStateNormal];
+            [_headBtn addTarget:self action:@selector(personPage:) forControlEvents:UIControlEventTouchUpInside];
         }
     }
     return _headBtn;
@@ -202,4 +204,11 @@ for(UIView* next = [self superview]; next; next = next.superview) {
     LogPageViewController *lvc = [[LogPageViewController alloc] init];
     [[self viewController].navigationController pushViewController:lvc animated:YES];
 }
+
+-(void) personPage:(UIButton *)button{
+    PersonPageViewController *pvc = [[PersonPageViewController alloc]init];
+    [[self viewController].navigationController pushViewController:pvc animated:YES];
+}
+
+
 @end

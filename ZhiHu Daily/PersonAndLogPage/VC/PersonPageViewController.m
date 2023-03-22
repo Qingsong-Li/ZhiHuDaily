@@ -6,6 +6,7 @@
 //
 
 #import "PersonPageViewController.h"
+#import "MainPageViewController.h"
 #import "Masonry.h"
 
 @interface PersonPageViewController ()<
@@ -68,7 +69,7 @@ UITableViewDataSource
         make.top.mas_equalTo(self.idLab.mas_bottom).mas_offset(10);
         make.centerX.mas_equalTo(self.view).mas_offset(0);
         make.width.mas_equalTo(self.view).mas_offset(0);
-        make.height.mas_offset(100);
+        make.height.mas_offset(200);
     }];
     
     [self.backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -77,7 +78,16 @@ UITableViewDataSource
         make.size.mas_offset(22);
     }];
     
+    
 }
+
+-(NSArray *) getAry{
+
+    NSArray *ary = [NSArray array];
+    ary = @[@"我的收藏",@"消息中心",@"退出登录"];
+    return ary;
+}
+
 #pragma mark - Lazy
 
 - (UITableView *)table{
@@ -157,19 +167,19 @@ UITableViewDataSource
     return _setLab;
 }
 
-#pragma mark - UITableViewDelegate
 
+
+
+#pragma mark - UITableViewDataSourse
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellId = @"cellId";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if(cell == nil){
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-        if(indexPath.row == 0){
-            cell.textLabel.text = @"我的收藏";
-            cell.textLabel.textColor = UIColor.blackColor;
-        }else if(indexPath.row == 1){
-            cell.textLabel.text = @"消息中心";
-            cell.textLabel.textColor = UIColor.blackColor;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;                    
+        cell.textLabel.text = [self getAry][indexPath.row];
+        if([[self getAry][indexPath.row]  isEqual: @"退出登录"]){
+            cell.textLabel.textColor = UIColor.redColor;
         }
         
     }
@@ -180,11 +190,28 @@ UITableViewDataSource
     return 50;
 }
 
-#pragma mark - UITableViewDataSourse
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2;
+    return 3;
 }
+
+#pragma mark - UITableViewDelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if([[self getAry][indexPath.row]  isEqual: @"退出登录"]){
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"LoginStatus.plist" ofType:nil];//获取文件的路径
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithContentsOfFile:path];//根据路径找到plist文件并装入字典
+        [dic setObject:@"NO"forKey:@"isLog"];//修改字典的value值
+        NSLog(@"%@",path);
+        BOOL success = [dic writeToFile:path atomically:YES];//用新的字典覆盖之前的文件
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:path];//检验收否写入成功，重新获取一遍，发现获取的值确实为修改后的值
+        NSLog(@"%@",path);
+        if(success){
+            NSLog(@"写入成功");
+        }
+        [MainPageViewController log:NO];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
+
 
 
 
@@ -198,7 +225,7 @@ UITableViewDataSource
 }
 
 -(void) back:(UIButton *) backBtn{
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end
