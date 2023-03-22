@@ -33,7 +33,7 @@
 ## 2.主页面
 
 - 顶部的UIView 
-- 主界面的UITableView，包含一个自定义的UICollectionView和6个UITableViewCell
+- 主界面的UITableView group样式，包含一个自定义的UICollectionView和UITableViewCell
 
 ## 3.新闻详情页
 
@@ -42,21 +42,23 @@
 
 # 三.使用的比较重要的技术以及知识点
 
-## 1.实现轮播图加UITableView 的效果
+## 1.主界面的搭建
 
-我刚开始的思路是简单的用一个UICollectionView和UITableView，但这样无法实现轮播图也会被向上滑动的效果。然后我的思路是仅用一个UITableView，在UITableView的顶端加上一个UICollectionView，关键点在于如何把它放在cell的上面。此处我用的是
-
-```objective-c
-  _table.contentInset = UIEdgeInsetsMake(385, 0, 0, 0);
-```
-
-在UITableView上拓出一个空间。
-
-此外，如果直接在该空间上加载一个UICollectionView将无法实现，因此需要在该空间上加载一个自定义的UIView，然后在这个自定义的View中在加载出一个UICollectionVIew。但此处出现了一个巨大问题，由于在ViewController中仅加载的是一个TableView，在TableView中再加载一个UIView，而在这个UIView中的UICollectionView的代理方法只能写在UIView中，因此这里出现了Model 和View连接的情况，但目前我无法解决，只能这样。（原则上Model 和View 仅能和VC 链接）
+首先观察到主界面有一个轮播图和瀑布流，决定采用UItabelView 并且为Group样式，将第一个Group的header作为轮播图，但由于采用的是UICollectionView实现轮播图，无法直接加到Header上，需要封装一个View作为桥梁。然后是瀑布流，需要对ScrollView的偏移量进行一个判断，当偏移量达到某个值的时候就获取更多数据并调用reload方法。
 
 ## 2. 主界面的轮播图自动滑动
 
 通过一个NSTimer类进行时间控制，以达到自动翻页，并且在一个自定义的翻页的方法中限定当当前页面为最后一页时，下一页面为第一个页面。
+
+## 3.关于顶部试图的头像需要根据登录状态进行切换。
+
+如果把Topview作为主页面控制器的成员并使用懒加载，而且在Viewdidload方法里加载的话无法实现在登录状态改变是切换头像，所以不把Topview作为一个成员，而是在viewWillAppear方法中创建的局部变量，然后加载到主View上去，该方法会在VC每次重新出来时调用，并根据登录状态切换头像，而viewDidLoad则只会在第一次调用。
+
+## 4.关于登录状态数据持久化
+
+我之前一直是想把plist文件保存在我这个项目的文件夹里面，这样别人拿去才能用，但这样根本无法获取到该文件并修改，后来我又去了解，发现每个应用程序有个沙盒的目录结构，自带了四个文件夹。就把plist文件保存在documens文件夹下，然后别人拿去第一次肯定不存在这个plist，就写了一个判断，不存在就创建了，相当于别人拿去第一次用就会自动在他的设备里创建这个plist，并且为没有登录状态。
+然后后面再根据操作更改plist文件中的数据。
+
 
 # 四.心得体会
 
