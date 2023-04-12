@@ -197,25 +197,22 @@ UITableViewDataSource
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if([[self getAry][indexPath.row]  isEqual: @"退出登录"]){
-        [self saveTheStatusOfExit];
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"LoginStatus.plist" ofType:nil];//获取文件的路径
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithContentsOfFile:path];//根据路径找到plist文件并装入字典
+        [dic setObject:@"NO"forKey:@"isLog"];//修改字典的value值
+        NSLog(@"%@",path);
+        BOOL success = [dic writeToFile:path atomically:YES];//用新的字典覆盖之前的文件
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:path];//检验收否写入成功，重新获取一遍，发现获取的值确实为修改后的值
+        NSLog(@"%@",path);
+        if(success){
+            NSLog(@"写入成功");
+        }
         [MainPageViewController log:NO];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
-//保存退出状态
--(void) saveTheStatusOfExit{
-    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    path = [path stringByAppendingString:@"/LoginStatus.plist"];//获取文件的路径
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithContentsOfFile:path];//根据路径找到plist文件并装入字典
-    [dic setObject:@"NO"forKey:@"isLog"];//修改字典的value值
-    NSLog(@"%@",path);
-    BOOL success = [dic writeToFile:path atomically:YES];//用新的字典覆盖之前的文件
 
-    NSLog(@"%@",path);
-    if(success){
-        NSLog(@"写入成功");
-    }
-}
+
 
 
 #pragma mark - Click

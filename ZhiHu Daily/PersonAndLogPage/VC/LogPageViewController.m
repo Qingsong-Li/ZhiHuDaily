@@ -260,7 +260,6 @@
         [alert addAction:back];
         [self presentViewController:alert animated:YES completion:nil];
     }else{
-        [self saveTheStatusOfLogin];
         [MainPageViewController log:YES];
         PersonPageViewController *pvc = [[PersonPageViewController alloc] init];
         [self.navigationController pushViewController:pvc animated:YES];
@@ -273,20 +272,6 @@
     }];
     [alert addAction:back];
     [self presentViewController:alert animated:YES completion:nil];
-}
-
-//保存登录状态
--(void)saveTheStatusOfLogin{
-    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    path = [path stringByAppendingString:@"/LoginStatus.plist"];//获取文件的路径
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithContentsOfFile:path];//根据路径找到plist文件并装入字典
-    [dic setObject:@"YES"forKey:@"isLog"];//修改字典的value值
-    NSLog(@"%@",path);
-    BOOL success = [dic writeToFile:path atomically:YES];//用新的字典覆盖之前的文件
-    NSLog(@"%@",path);
-    if(success){
-        NSLog(@"写入成功");
-    }
 }
 
 @end

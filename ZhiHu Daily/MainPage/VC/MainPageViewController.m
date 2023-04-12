@@ -44,16 +44,9 @@ static BOOL loging;
 -(void)getLoginStatus{
 //    NSString *path1 = [[NSBundle mainBundle] pathForResource:@"LoginStatus" ofType:@"plist"];
 //    NSString *path2 = [NSString stringWithContentsOfFile:path1 encoding:NSUTF8StringEncoding error:nil];
-//    NSString *lastPath = [[NSBundle mainBundle] pathForResource:@"LoginStatus.plsit" ofType:nil];
-//    NSLog(@"%@",lastPath);
-    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    path = [path stringByAppendingString:@"/LoginStatus.plist"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"LoginStatus.plist" ofType:nil];
     NSLog(@"%@",path);
     NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:path];
-    if(dic == nil){
-        dic = @{@"islog":@"NO"};
-        [dic writeToFile:path atomically:YES];
-    }
     if([dic[@"isLog"]  isEqual: @"YES"]){
         loging = YES;
     }else{
