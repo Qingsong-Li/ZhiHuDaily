@@ -15,7 +15,6 @@
 		AB65ADAE29A11F410057F2AE /* ExtraView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB65ADAD29A11F410057F2AE /* ExtraView.m */; };
 		AB65ADB429A202D20057F2AE /* ExtraModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB65ADB329A202D20057F2AE /* ExtraModel.m */; };
 		AB9F3D4229BF2968006A390D /* DateSeparateView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9F3D4129BF2968006A390D /* DateSeparateView.m */; };
-		AB9F3D5B29C9ED22006A390D /* LoginStatus.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB9F3D5A29C9ED22006A390D /* LoginStatus.plist */; };
 		ABA5174829700AA700D68062 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA5174729700AA700D68062 /* AppDelegate.m */; };
 		ABA5175329700AA800D68062 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABA5175229700AA800D68062 /* Assets.xcassets */; };
 		ABA5175929700AA800D68062 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA5175829700AA800D68062 /* main.m */; };
@@ -72,7 +71,6 @@
 		AB65ADB329A202D20057F2AE /* ExtraModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExtraModel.m; sourceTree = "<group>"; };
 		AB9F3D4029BF2968006A390D /* DateSeparateView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateSeparateView.h; sourceTree = "<group>"; };
 		AB9F3D4129BF2968006A390D /* DateSeparateView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateSeparateView.m; sourceTree = "<group>"; };
-		AB9F3D5A29C9ED22006A390D /* LoginStatus.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = LoginStatus.plist; path = "Login Status/LoginStatus.plist"; sourceTree = SOURCE_ROOT; };
 		ABA5174329700AA700D68062 /* ZhiHu Daily.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ZhiHu Daily.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABA5174629700AA700D68062 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		ABA5174729700AA700D68062 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -260,7 +258,6 @@
 				ABA5175229700AA800D68062 /* Assets.xcassets */,
 				AB65AD6729A107550057F2AE /* LaunchScreen.storyboard */,
 				ABA5175729700AA800D68062 /* Info.plist */,
-				AB9F3D5A29C9ED22006A390D /* LoginStatus.plist */,
 				ABA5175829700AA800D68062 /* main.m */,
 			);
 			path = "ZhiHu Daily";
@@ -440,7 +437,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABA5175329700AA800D68062 /* Assets.xcassets in Resources */,
-				AB9F3D5B29C9ED22006A390D /* LoginStatus.plist in Resources */,
 				AB65AD6829A107550057F2AE /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
