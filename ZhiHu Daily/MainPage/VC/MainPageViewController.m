@@ -196,14 +196,14 @@ static BOOL loging;
     //复用机制
     FirstPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellReuseIdentifier];
     if(cell == nil){
-        cell = [[FirstPageTableViewCell alloc] init];
-        cell.title.text = dataModel.title;
+        cell = [[FirstPageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellReuseIdentifier];
+    }
+    cell.title.text = dataModel.title;
 //        CGSize size = [cell.title sizeThatFits:CGSizeMake(200, MAXFLOAT)];
 //        cell.title.frame = CGRectMake(0, 0, 0, size.height);
-        [cell.title sizeToFit];
-        cell.hint.text = dataModel.hint;
-        [cell.image sd_setImageWithURL:[NSURL URLWithString:[dataModel.image objectAtIndex:0]]];
-    }
+    [cell.title sizeToFit];
+    cell.hint.text = dataModel.hint;
+    [cell.image sd_setImageWithURL:[NSURL URLWithString:[dataModel.image objectAtIndex:0]]];
     return cell;
 //
 }
@@ -229,7 +229,7 @@ static BOOL loging;
 #pragma mark - ScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     CGFloat contentYoffset = scrollView.contentOffset.y;
-    NSLog(@"内容-偏移量:%f table高度:%f",scrollView.contentSize.height-contentYoffset,self.table.frame.size.height);
+//    NSLog(@"内容-偏移量:%f table高度:%f",scrollView.contentSize.height-contentYoffset,self.table.frame.size.height);
     if(self.table.frame.size.height == 0 ||scrollView.contentSize.height-contentYoffset<700) return;
     if(self.isloading == YES) return;
     if (scrollView.contentSize.height-contentYoffset- 200<= self.table.frame.size.height) {
@@ -254,7 +254,7 @@ static BOOL loging;
     [FirstPageModel getDatawithSuccess:^(NSArray * _Nonnull array) {
         self.dataArray = array;
         [self.allDataArray addObject:self.dataArray];
-        NSLog(@"loadmore");
+//        NSLog(@"loadmore");
         [self.table reloadData];
         self.loading = NO;
     } Failure:^{

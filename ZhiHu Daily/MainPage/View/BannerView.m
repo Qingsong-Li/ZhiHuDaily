@@ -97,7 +97,7 @@ for(UIView* next = [self superview]; next; next = next.superview) {
 #pragma mark - UICollectionViewDataSourse
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    return 1;
+    return 2;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -123,7 +123,7 @@ for(UIView* next = [self superview]; next; next = next.superview) {
 
     
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    BannerModel *bannerDataModel  = self.bannerDataArray[indexPath.item];
+    BannerModel *bannerDataModel  = self.bannerDataArray[indexPath.item % 5];
     BannerCollectionViewCell *bannerCell = [collectionView dequeueReusableCellWithReuseIdentifier:BannerCollectionViewCellReuseIdentifier forIndexPath:indexPath];
     bannerCell.title.text = bannerDataModel.title;
     bannerCell.hint.text = bannerDataModel.hint;
@@ -136,6 +136,7 @@ for(UIView* next = [self superview]; next; next = next.superview) {
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [self.myTimer invalidate];
+    self.myTimer = nil;
 }
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
@@ -146,8 +147,12 @@ for(UIView* next = [self superview]; next; next = next.superview) {
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    //page第一个点是0
-    self.pageControl.currentPage = (self.collectionView.contentOffset.x + self.collectionView.bounds.size.width * 0.5)/self.collectionView.bounds.size.width;
+//    page第一个点是0
+    NSInteger currentPage = (self.collectionView.contentOffset.x + self.collectionView.bounds.size.width * 0.5)/self.collectionView.bounds.size.width;
+    if(currentPage == 5){
+        currentPage = 0;
+    }
+    self.pageControl.currentPage = currentPage;
 }
 
 -(NSTimer *)myTimer
@@ -174,12 +179,17 @@ for(UIView* next = [self superview]; next; next = next.superview) {
 -(void)nextPage
 {
     NSInteger currentPage = self.pageControl.currentPage;
-    currentPage ++;
-    if (currentPage == 5) {
-        currentPage = 0;
+//    NSLog(@"%ld",(long)currentPage);
+    if((long)[[self.collectionView indexPathsForVisibleItems] firstObject].section == 1){
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
     }
-    [self.collectionView setContentOffset:CGPointMake(currentPage * [UIScreen mainScreen].bounds.size.width, 0) animated:YES];
+    if(currentPage == 4){
+        currentPage = 0;
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:currentPage inSection:1] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+    }else{
+        currentPage ++;
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:currentPage inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+    }
+    
 }
-
-
 @end
