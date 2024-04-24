@@ -123,7 +123,7 @@ for(UIView* next = [self superview]; next; next = next.superview) {
 
     
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    BannerModel *bannerDataModel  = self.bannerDataArray[indexPath.item % 5];
+    BannerModel *bannerDataModel  = self.bannerDataArray[indexPath.item% 5 ];
     BannerCollectionViewCell *bannerCell = [collectionView dequeueReusableCellWithReuseIdentifier:BannerCollectionViewCellReuseIdentifier forIndexPath:indexPath];
     bannerCell.title.text = bannerDataModel.title;
     bannerCell.hint.text = bannerDataModel.hint;
